@@ -19,9 +19,9 @@ int mygetch()
 Maze make_maze(unsigned n)
 {
 	srand((unsigned)time(NULL));
-	Maze* m = malloc(sizeof(Maze)+sizeof(Point)*n);
+	Maze* m = (Maze*)malloc(sizeof(Maze)+sizeof(Point)*n);
 	*m = (Maze){.size=n};
-	Point ms[] = &(m->points[0]);
+	Point* ms = &(m->points[0]);
 	unsigned depths[n];
 	for(unsigned i=0; i<n; i++)
 	{
@@ -29,7 +29,7 @@ Maze make_maze(unsigned n)
 		while(depths[++j])
 			depths[j]--;
 		ms[i].left=0;
-		while(rand()%2&ms[i].left<depths[j]-1)
+		while(rand()%2 && ms[i].left<depths[j]-1)
 			ms[i].left++;
 		ms[i].right=depths[j]-ms[i].left-1;
 		depths[j+1]=ms[i].left;
@@ -52,7 +52,7 @@ void step(unsigned* spot, unsigned** depths, Maze* maze)
 			if (*depths[i]+1==maze->points[*spot-*depths[i]].left)
 				base_opts[1] = -1;
 			if (*depths[i] == 1)
-				base_opts[3] = maze->points[*spot].left+*spot;
+				base_opts[2] = maze->points[*spot].left+*spot;
 		}
 	unsigned num_opts = 2;
 	if (base_opts[0] >= maze->size)
@@ -118,12 +118,12 @@ void step(unsigned* spot, unsigned** depths, Maze* maze)
 	case 1:
 		for (unsigned j=0; j<i; j++)
 			if (depths[j])
-				*depths[j]--;
+				(*depths[j])--;
 		break;
 	default:
 		unsigned slot;
 		unsigned j=i;
-		for (unsigned slot=depths[j]; j<i+choice_slot-1; j++)
+		for (unsigned slot=*depths[j]; j<i+choice_slot-1; j++)
 		{
 			unsigned add=maze->points[slot].left;
 			for (unsigned k=0; k<j; k++)

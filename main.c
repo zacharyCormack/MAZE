@@ -7,7 +7,7 @@ int main()
 	scanf("%d", &size);
 	Maze game = make_maze(size);
 	unsigned pos=0;
-	unsigned depths[] = malloc(size*sizeof(unsigned));
+	unsigned* depths = (unsigned*)malloc(size*sizeof(unsigned));
 	while(pos<size)
 		step(&pos, &depths, &game);
 	return 0;
