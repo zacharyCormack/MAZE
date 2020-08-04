@@ -1,31 +1,13 @@
 #include "Maze.hpp"
 
-int mygetch()
-{
-	int ch;
-	struct termios t_old, t_new;
-
-	tcgetattr(STDIN_FILENO, &t_old);
-	t_new = t_old;
-	t_new.c_lflag &= ~(ICANON | ECHO);
-	tcsetattr(STDIN_FILENO, TCSANOW, &t_new);
-
-	ch = getchar();
-	
-	tcsetattr(STDIN_FILENO, TCSANOW, &t_old);
-	return ch;
-}
-
 void link_rooms(unsigned start, unsigned end, Maze* maze)
 {
-	// cout << "linking " << start << " to " << end << '\n';
-	// usleep(375000);
 	if (start==end)
 		return;
 	if (start+1==end)
 	{
-		maze->connections.push_back(start);
-		maze->connections.push_back(end);
+		maze->points[start].connections.push_back(end);
+		maze->points[end].connections.push_back(start);
 		return;
 	}
 	unsigned a = 0;
@@ -34,8 +16,8 @@ void link_rooms(unsigned start, unsigned end, Maze* maze)
 			break;
 	if (rand()%2)
 	{
-		maze->connections.push_back(start);
-		maze->connections.push_back(start+a);
+		maze->points[start].connections.push_back(start+a+1);
+		maze->points[start+a+1].connections.push_back(start);
 		link_rooms(start, start+a, maze);
 		link_rooms(start+a+1, end, maze);
 	}
@@ -49,36 +31,34 @@ void link_rooms(unsigned start, unsigned end, Maze* maze)
 Maze make_maze(unsigned short n)
 {
 	srand((unsigned)time(NULL));
-	Maze m = (Maze){.size=n};
+	vector<unsigned short> nums;
+	unsigned i=0;
+	while (i++<n)
+		nums.push_back(i);
+	random_shuffle(nums.begin(), nums.end());
+	vector<Point> points;
+	while (i--)
+	{
+		Point point = (Point){.room_num=nums[i]};
+		points.push_back(point);
+	}
+	Maze m = (Maze){n, points};
 	link_rooms(0, n-1, &m);
 	return m;
 }
 
-void step(unsigned short* spot, Maze* maze)
+bool step(Point* spot, Maze* maze)
 {
-	unsigned num_opts=0;
-	for (unsigned i=0; i<maze->size*2-2; i++)
-		if (maze->connections[i]==*spot)
-			num_opts++;
-	cout << "This room has " << num_opts << " doors\n";
-	hash<unsigned short> mk_hash;
-	size_t spot_hash = mk_hash(*spot);
-	cout << spot_hash << "\n";
-	// for (unsigned j=0; j<7; j++)
-	// {
-	// 	for (unsigned k=0; j<num_opts; j++)
-	// 		if (j==3)
-	// 			cout << "\e[0m   \e[34;41m  " << k << "   []  ";
-	// 		else
-	// 			cout << "\e[0m   \e[34;41m          ";
-	// 	cout << "\e[0m\n";
-	// }
-	unsigned i=0, choice;
-	cout << "Which door?\n";
+	cout << "\e[KRoom ID: " << spot->room_num << "\nThis room has " << spot->connections.size() << " door" << (spot->connections.size()!=1?"s":"") << "\e[K\n";
+	vector<unsigned short> choices = spot->connections;
+	random_shuffle(choices.begin(), choices.end());
+	for(unsigned i=0; i<choices.size(); i++)
+		cout << maze->points[choices[i]].room_num << " ";
+	unsigned choice;
+	cout << "\e[K\nWhich door?\e[K\n\e[K";
 	cin >> choice;
-	choice--;
-	while (choice)
-		if (maze->connections[i++]==*spot)
-			--choice;
-	*spot+=maze->connections[(i%2?i-1:i)];
+	if (choices[choice-1] == maze->size-1)
+		return false;
+	*spot=maze->points[choices[choice-1]];
+	return true;
 }

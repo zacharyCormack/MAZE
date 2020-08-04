@@ -2,13 +2,17 @@
 
 int main()
 {
-	system("tabs -2");
-	cout << "WELCOME TO THE MAZE.\nGame size: ";
+	cout << "\nWELCOME TO THE MAZE.\nGame size: ";
 	unsigned size;
 	cin >> size;
 	Maze game = make_maze(size);
-	unsigned short pos=0;
-	while(pos<size-1)
-		step(&pos, &game);
+	unsigned short timer=51;
+	Point point = game.points[0];
+	cout << "\n\e[s";
+	while(step(&point, &game)&&--timer)
+		cout << "\e[u\e[KTIMER: " << timer << "\n";
+	cout << "\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K\e[A\e[K";
+	cout << "\nYOU" << (timer?"WIN":"LOSE") << "!\n";
+	cin.ignore();
 	return 0;
 }
