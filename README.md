@@ -13,7 +13,7 @@ The number of steps is determined by the quadratic function \\( t=\left\lfloor\f
 The `main.cpp` file handles setup, getting game size, timer, and checking for game end.
 It runs the `make_maze` function from the `Maze.cpp` file.
 The `Maze.cpp` file generates a random maze. The maze is a mathematical graph, a tree.
-All nodes have 0 to 2 child nodes.
+All nodes can have any number of child nodes.
 Trees of this format can be created by the `make_maze` function.
 It uses the recursive `link_rooms` function to connect the start and end nodes together, with the call:
 ```cpp

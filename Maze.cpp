@@ -53,10 +53,14 @@ bool step(Point* spot, Maze* maze)
 	vector<unsigned short> choices = spot->connections;
 	random_shuffle(choices.begin(), choices.end());
 	for(unsigned i=0; i<choices.size(); i++)
-		cout << maze->points[choices[i]].room_num << " ";
+		cout << i << ": ROOM ID " << maze->points[choices[i]].room_num << "\n\e[K";
 	unsigned choice;
-	cout << "\e[K\nWhich door?\e[K\n\e[K";
-	cin >> choice;
+	cout << "\n\n\e[K\n";
+	while (choice != 0 && choice < choices.size())
+	{
+		cout << "\e[2A\e[KWhich door?\n\e[K";
+		cin >> choice;
+	}
 	if (choices[choice-1] == maze->size-1)
 		return false;
 	*spot=maze->points[choices[choice-1]];
