@@ -5,6 +5,8 @@
 #include <time.h>
 #include <algorithm>
 #include <vector>
+#define REPEAT11(x) x x x x x x x x x x x
+#define REPEAT7(x) x x x x x x x
 using namespace std;
 
 typedef struct
