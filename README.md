@@ -6,7 +6,7 @@
 
 This project creates a maze and allows the user to travel within it.
 The player will have some number of steps to travel through the maze.
-This is determined by the quadratic function \\( \left\lfloor t=\frac{s^2}{8}+s+8 \right\rfloor \\).
+The number of steps is determined by the quadratic function \\( t=\left\lfloor\frac{s^2}{8}+s+8\right\rfloor \\).
 
 ## How it Works
 
