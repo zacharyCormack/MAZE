@@ -23,4 +23,4 @@ Then `link_rooms` may call itself to connect room 0 to a, and a to n-1, and the 
 
 ## In Use
 
-![example GIF](example.gif "EXAMPLE")
+![example GIF](ex.gif "EXAMPLE")
