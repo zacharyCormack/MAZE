@@ -49,14 +49,14 @@ Maze make_maze(unsigned short n)
 
 bool step(Point* spot, Maze* maze)
 {
-	cout << "\e[KRoom ID: " << spot->room_num << "\nThis room has " << spot->connections.size() << " door" << (spot->connections.size()!=1?"s":"") << "\e[K\n";
+	cout << "\e[KRoom ID: " << spot->room_num << "\nThis room has " << spot->connections.size() << " door" << (spot->connections.size()!=1?"s":"") << "\e[K\n\e[K";
 	vector<unsigned short> choices = spot->connections;
 	random_shuffle(choices.begin(), choices.end());
 	for(unsigned i=0; i<choices.size(); i++)
-		cout << i << ": ROOM ID " << maze->points[choices[i]].room_num << "\n\e[K";
-	unsigned choice;
-	cout << "\n\n\e[K\n";
-	while (choice != 0 && choice < choices.size())
+		cout << i+1 << ": ROOM ID " << maze->points[choices[i]].room_num << "\n\e[K";
+	unsigned choice=0;
+	cout << "\n\e[K\n\e[K\n\e[K\n\e[K\n\e[K\n\e[K\n\e[K\e[4A";
+	while (choice == 0 || choice > choices.size())
 	{
 		cout << "\e[2A\e[KWhich door?\n\e[K";
 		cin >> choice;
