@@ -23,7 +23,7 @@ link_rooms(0, n-1, &m, d);
 ```
 Then `link_rooms` may call itself to connect room 0 to a, and a to n-1, and the process continues.
 Upon victory, a **score** is calculated with the function 
-\\() \left\lfloor d\times\ln{d}\times\frac{t}{m}\right\rfloor \\),
+\\( \left\lfloor d\times\ln{d}\times\frac{t}{m}\right\rfloor \\),
 where t equals remaining time, m equals initial timer value, s equals size, and d equals difficulty.
 Then, *if appropriate*, the **high score** is updated.
 
