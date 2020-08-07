@@ -1,6 +1,6 @@
 #include "Maze.hpp"
 
-void link_rooms(unsigned start, unsigned end, Maze* maze)
+void link_rooms(unsigned start, unsigned end, Maze* maze, float d)
 {
 	if (start==end)
 		return;
@@ -11,24 +11,27 @@ void link_rooms(unsigned start, unsigned end, Maze* maze)
 		return;
 	}
 	unsigned a = 0;
-	while (rand()%2)
-		if (++a==end-start-1)
-			break;
 	if (rand()%2)
 	{
+		while ((float)rand()/RAND_MAX<d)
+			if (++a==end-start-1)
+				break;
 		maze->points[start].connections.push_back(start+a+1);
 		maze->points[start+a+1].connections.push_back(start);
-		link_rooms(start, start+a, maze);
-		link_rooms(start+a+1, end, maze);
+		link_rooms(start, start+a, maze, d);
+		link_rooms(start+a+1, end, maze, d);
 	}
 	else
 	{
-		link_rooms(start, start+a, maze);
-		link_rooms(start+a, end, maze);
+		while ((float)rand()/RAND_MAX>d)
+			if (a++==end-start-1)
+				break;
+		link_rooms(start, start+a, maze, d);
+		link_rooms(start+a, end, maze, d);
 	}
 }
 
-Maze make_maze(unsigned short n)
+Maze make_maze(unsigned short n, float d)
 {
 	srand((unsigned)time(NULL));
 	vector<unsigned short> nums;
@@ -43,7 +46,7 @@ Maze make_maze(unsigned short n)
 		points.push_back(point);
 	}
 	Maze m = (Maze){n, points};
-	link_rooms(0, n-1, &m);
+	link_rooms(0, n-1, &m, d);
 	return m;
 }
 
