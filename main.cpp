@@ -6,22 +6,28 @@ int main()
 	bool play_again=true;
 	while (play_again)
 	{
-		cout << "\nWELCOME TO THE MAZE.\nGame size: ";
-		unsigned size;
-		cin >> size;
 		cout <<
+		"\nWELCOME TO THE MAZE.\n"
 		"Choose Difficulty Value:\n"
 		"  1.5  Beginner\n"
 		"  2    Easy\n"
 		"  2.5  Moderate\n"
 		"  3    Challenging\n"
 		"  3.5  Difficult\n"
-		"  4.5  Hard\n"
+		"  4    Hard\n"
 		"  5    Very Hard\n"
 		"  6    Insane\n"
 		"Difficuly: ";
 		float difficulty;
 		cin >> difficulty;
+		unsigned size=0;
+		unsigned min=5*difficulty;
+		cout << "Size must be at least " << min << " for this difficulty level.\n\n";
+		while (size<min)
+		{
+			cout << "\e[A\e[KGame size: ";
+			cin >> size;
+		}
 		Maze game = make_maze(size, (difficulty-1)/difficulty);
 		unsigned short timer=size*size/8+size+8;
 		unsigned short max = timer;
@@ -29,7 +35,7 @@ int main()
 		cout << "\n\e[s";
 		while(step(&point, &game)&&--timer)
 			cout << "\e[u\e[KTIMER: " << timer << "\n";
-		cout << REPEAT22("\e[A\e[K") << "\nYOU " << (timer?"WIN":"LOSE") << "!\n";
+		cout << REPEAT24("\e[A\e[K") << "\n\nYOU " << (timer?"WIN":"LOSE") << "!\n";
 		if (timer)
 		{
 			unsigned score=(unsigned)(difficulty*log(size)*timer/max);
@@ -48,8 +54,7 @@ int main()
 				break;
 			}
 		}
-		// if (play_again)
-			cout << REPEAT7("\e[A\e[K");
+		cout << "\n" REPEAT7("\e[A\e[K");
 	}
 	return 0;
 }

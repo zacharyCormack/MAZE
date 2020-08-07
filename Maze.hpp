@@ -1,6 +1,6 @@
 #ifndef MAZE
 #define MAZE
-#define REPEAT22(x) x x x x x x x x x x x x x x x x x x x x x x
+#define REPEAT24(x) x x x x x x x x x x x x x x x x x x x x x x x x
 #define REPEAT7(x) x x x x x x x
 #include <iostream>
 #include <stdlib.h>
