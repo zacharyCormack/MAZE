@@ -6,7 +6,9 @@
 
 This project creates a maze and allows the user to travel within it.
 The player will have some number of steps to travel through the maze.
-The number of steps is determined by the quadratic function \\( t=\left\lfloor\frac{s^2}{8}+s+8\right\rfloor \\).
+The number of steps is determined by the quadratic function
+\\( t=\left\lfloor\frac{s^2}{8}+s+8\right\rfloor \\),
+where t equals timer and s equals size.
 
 ## How it Works
 
@@ -20,7 +22,10 @@ It uses the recursive `link_rooms` function to connect the start and end nodes *
 link_rooms(0, n-1, &m, d);
 ```
 Then `link_rooms` may call itself to connect room 0 to a, and a to n-1, and the process continues.
-Upon victory, a **score** is calculated with the function below and then the **high score** is updated *if appropriate*;
+Upon victory, a **score** is calculated with the function 
+\\( \left\lfloor d\times\ln{d}\times\frac{t}{m}\right\rfloor \\),
+where t equals remaining time, m equals initial timer value, s equals size, and d equals difficulty.
+Then, *if appropriate*, the **high score** is updated.
 
 ## In Use
 
