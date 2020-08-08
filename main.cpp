@@ -35,7 +35,7 @@ int main()
 		cout << "\n\e[s";
 		while(step(&point, &game)&&--timer)
 			cout << "\e[u\e[KTIMER: " << timer << "\n";
-		cout << REPEAT24("\e[A\e[K") << "\n\nYOU " << (timer?"WIN":"LOSE") << "!\n";
+		cout << REPEAT7("\e[K\e[A") "\e[u" REPEAT7("\n") REPEAT22("\e[A\e[K") << "\n\nYOU " << (timer?"WIN":"LOSE") << "!\n";
 		if (timer)
 		{
 			unsigned score=(unsigned)(difficulty*log(size)*timer/max);

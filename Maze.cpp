@@ -58,7 +58,7 @@ bool step(Point* spot, Maze* maze)
 	for(unsigned i=0; i<choices.size(); i++)
 		cout << i+1 << ": ROOM ID " << maze->points[choices[i]].room_num << "\n\e[K";
 	unsigned choice=0;
-	cout << REPEAT7("\n\e[K") "\e[4A";
+	cout << REPEAT22("\n\e[K") "\e[19A";
 	while (choice == 0 || choice > choices.size())
 	{
 		cout << "\e[2A\e[KWhich door?\n\e[K";
