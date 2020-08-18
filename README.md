@@ -26,6 +26,7 @@ Upon victory, a **score** is calculated with the function
 \\( \left\lfloor d\times\ln{d}\times\frac{t}{m}\right\rfloor \\),
 where t equals remaining time, m equals initial timer value, s equals size, and d equals difficulty.
 Then, *if appropriate*, the **high score** is updated.
+The high score is recorded in a file named *".hiscr"*.
 
 ## In Use
 
