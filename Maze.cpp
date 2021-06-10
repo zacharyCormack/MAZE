@@ -34,12 +34,11 @@ void link_rooms(unsigned start, unsigned end, Maze *maze, float d)
 		maze->points[start+a+1].connections.push_back(start    );
 
 		maze->points[start+a+1].doors.push_back(door);
-		maze->points[end      ].doors.push_back(door);
+		maze->points[start    ].doors.push_back(door);
 
 		link_rooms(start, start+a, maze, d);
 		link_rooms(start+a+1, end, maze, d);
 	}
-
 	else
 	{
 		while ((float)rand()/RAND_MAX>d)
@@ -54,14 +53,8 @@ void link_rooms(unsigned start, unsigned end, Maze *maze, float d)
 Maze make_maze(unsigned short n, float d)
 {
 	srand((unsigned)time(NULL));
-	// vector<unsigned short> nums;
-	unsigned i=n;
-
-	// while (i++<n)
-	// 	nums.push_back(i);
 	
-	// random_shuffle(nums.begin(), nums.end());
-
+	unsigned i=n;
 	vector<Point> points;
 
 	while (i--)
@@ -81,7 +74,19 @@ bool step(Point *spot, Maze *maze)
 {
 	cout << "\e[KRoom: " << room_colours[spot->room].nm << "\nThis room has " << spot->connections.size() << " door" << (spot->connections.size()!=1?"s":"") << "\e[K\n\e[K";
 
-	vector<unsigned short> choices = spot->connections;
+	vector<unsigned short> choices, chc_opts = spot->connections;
+	vector<unsigned char>  colours, clr_opts = spot->doors;
+
+	while (chc_opts.size())
+	{
+		unsigned char pos = rand() % chc_opts.size();
+
+		choices.push_back(chc_opts[pos]);
+		colours.push_back(clr_opts[pos]);
+
+		chc_opts.erase(chc_opts.begin() + pos);
+		clr_opts.erase(clr_opts.begin() + pos);
+	}
 
 	for(unsigned i=0; i<choices.size(); i++)
 		cout << i+1 << ": " << door_colours[spot->doors[i]].nm << " door, leading to a " << room_colours[maze->points[choices[i]].room].nm << " room.\n\e[K";

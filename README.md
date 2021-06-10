@@ -28,6 +28,26 @@ where t equals remaining time, m equals initial timer value, s equals size, and 
 Then, *if appropriate*, the **high score** is updated.
 The high score is recorded in a file named *".hiscr"*.
 
+## Interface
+
+The UI involves a player first selecting a difficulty level and maze size.
+A *larger difficulty level* automatically requires a *larger maze size*.
+The player begins in the room at index `0`,
+but after exiting they are never told **exactly** where they are.
+By using the <ins>combination of *door colour* and *room colour* behind</ins>,
+a player can *recognize* entrances to *previously accessed rooms*.
+This allows players to choose new rooms,
+as each unentered room could contain the exit.
+
+The player is *never told* the index of the room they are in.
+That's because higher-indexed rooms are *closer to the exit*,
+allowing players recognize earlier that they went down a *dead end*.
+The order of doors must also be shuffled, because it would allow cheating:
+the correct door to enter from any room could be easily guessed.
+For larger difficulty and maze sizes, one is likely to see:
+two doors in a room that are identical, and that lead to identical rooms.
+This is *quite intentional*, and why there are only 6 colours used.
+
 ## Room Colours
 
 **Rooms now have colours!**
