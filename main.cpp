@@ -3,6 +3,9 @@
 int main()
 {
 	unsigned high_score=0;
+	ifstream record(".hiscr");
+	if (record)
+		record >> high_score;
 	bool play_again=true;
 
 	door_colours.push_back((Colour){"red   "});
@@ -84,5 +87,8 @@ int main()
 		cout << "\n" REPEAT7("\e[A\e[K");
 	}
 
+	ofstream new_record(".hiscr");
+	new_record << high_score;
+	
 	return 0;
 }
