@@ -27,6 +27,24 @@ Upon victory, a **score** is calculated with the function
 where t equals remaining time, m equals initial timer value, s equals size, and d equals difficulty.
 Then, *if appropriate*, the **high score** is updated.
 
+## Room Colours
+
+**Rooms now have colours!**
+When you enter a room, rather than a *number*, you are told the *colour*.
+Multiple rooms can have the same *colour*, so it can be **disorienting**.
+When deciding *which room* to go to next,
+the user will see the *colour* of a door **and** the room *behind* it.
+Doors are always the *same colour on both sides*.
+The colours of doors are accessed through a `Colour` structure,
+to allow the *char array* to be used in a `vector`.
+A room will store its colour in the `unsigned char room` property,
+and those of all its doors in the `vector<unsigned char>doors` property.
+Note that this stores only the index of the colour, not the full name.
+This saves *negligible* memory but is done anyway as a **matter of principle**.
+The *full names* of the colours are accessed in `door_colours` and `room_colours`.
+Note that while these are *exactly the same*,
+they are seperated to allow for *easy modification*.
+
 ## In Use
 
 ![example GIF](example.gif "EXAMPLE")
