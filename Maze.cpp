@@ -89,7 +89,7 @@ bool step(Point *spot, Maze *maze)
 	}
 
 	for(unsigned i=0; i<choices.size(); i++)
-		cout << i+1 << ": " << door_colours[spot->doors[i]].nm << " door, leading to a " << room_colours[maze->points[choices[i]].room].nm << " room.\n\e[K";
+		cout << i+1 << ": " << door_colours[colours[i]].nm << " door, leading to a " << room_colours[maze->points[choices[i]].room].nm << " room.\n\e[K";
 
 	unsigned choice=0;
 	cout << REPEAT22("\n\e[K") "\e[19A";

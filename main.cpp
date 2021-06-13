@@ -1,5 +1,10 @@
 #include "Maze.hpp"
 
+unsigned get_scr(float df, unsigned sz, unsigned short tm, unsigned short mx)
+{
+	return (unsigned)(df*log(sz)*tm/mx);
+}
+
 int main()
 {
 	unsigned high_score=0;
@@ -58,13 +63,13 @@ int main()
 		cout << "\n\e[s";
 
 		while(step(&point, &game)&&--timer)
-			cout << "\e[u\e[KTIMER: " << timer << "\n";
+			cout << "\e[u\e[KTIMER: " << timer << " (" << get_scr(difficulty, size, timer, max) << ")\n";
 		
 		cout << REPEAT7("\e[K\e[A") "\e[u" REPEAT7("\n") REPEAT22("\e[A\e[K") << "\n\nYOU " << (timer?"WIN":"LOSE") << "!\n";
 
 		if (timer)
 		{
-			unsigned score=(unsigned)(difficulty*log(size)*timer/max);
+			unsigned score=get_scr(difficulty, size, timer, max);
 			high_score=high_score>score?high_score:score;
 			cout << "SCORE: " << score << "\nHIGH SCORE: " << high_score;
 		}
